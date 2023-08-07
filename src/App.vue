@@ -1,6 +1,4 @@
-<!-- App.vue -->
-
-        <template>
+<template>
   <div id="app">
     <div class="parallax-background"></div>
     <div class="list">
@@ -60,7 +58,7 @@ export default {
 .parallax-background {
   /* Add your parallax background styles here */
   /* For example, you can use a background image and adjust background-position */
-  background-image: url('YOUR_PARALLAX_BACKGROUND_IMAGE_URL');
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/97/Lockheed_SR-71_Blackbird.jpg');
   background-size: cover;
   background-attachment: fixed;
   height: 100vh;
