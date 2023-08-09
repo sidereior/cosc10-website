@@ -37,15 +37,41 @@ export default {
 
 <style>
 
-.image {
-  width: 40%;
-  border: 2px solid #fff;
-}
 
 .text {
+  background: rgba(0, 0, 0, 0.9);
   width: 60%;
-  padding: 0 20px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  color: #ffffff;
 }
+
+.image {
+  width: 40%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+
+h2 {
+  font-size: 28px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+p {
+  font-size: 16px;
+  margin-top: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
+}
+
 
 .list-item {
   position: relative;

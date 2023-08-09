@@ -12,21 +12,25 @@
         :parallaxBackground="item.parallaxBackground"
       />
     </div>
+    <Timeline :currentElement="currentElement" />
   </div>
 </template>
 
 <script>
+import Timeline from './components/Timeline.vue';
 import ListItem from "./components/ListItem.vue";
 
 export default {
   name: "App",
   components: {
+    Timeline,
     ListItem,
   },
   data() {
     return {
+      currentElement: 1, // Set the currently viewed element's identifier here
       items: [
-      {
+        {
           title: "Class 1",
           description: "Description of Class 1",
           imageSrc: require('@/assets/class1.png'),
@@ -44,13 +48,35 @@ export default {
           imageSrc: require('@/assets/job1.png'), 
           parallaxBackground: require('@/assets/job1.png'), 
         },  
-    ],
+      ],
     };
-  }
+  },
 };
 </script>
 
+
 <style>
+
+:root {
+  --primary-color: #2c3e50; 
+  --secondary-color: #bdc3c7;
+  --text-color: #2c3e50; 
+  --font-family: 'Helvetica', sans-serif;
+}
+
+body {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
 
 .list-item {
   width: 100vw; 
@@ -69,10 +95,9 @@ export default {
 }
 
 .list {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  gap: 20px;
+  place-items: center;
   padding: 20px;
   overflow: hidden;
 }
@@ -80,26 +105,26 @@ export default {
 .list-item {
   display: flex;
   align-items: center;
-  margin: 20px 0;
-  position: relative;
-  overflow: hidden;
+  margin-bottom: 20px;
 }
 
 .text {
+  background: rgba(128, 128, 128, 0.6);
   width: 60%;
-  padding: 0 20px;
+  padding: 10px 20px;
+  box-sizing: border-box;
 }
 
-
-
-h2 {
-  font-size: 24px;
-  text-shadow: 0 0 10px #32CD32, 0 0 20px #32CD32;
+.image {
+  width: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 }
 
-p {
-  font-size: 16px;
-  margin-top: 10px;
-  text-shadow: 0 0 10px #32CD32, 0 0 20px #32CD32;
+.image img {
+  width: 100%;
+  height: auto;
 }
+
 </style>
