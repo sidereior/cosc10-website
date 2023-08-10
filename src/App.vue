@@ -28,7 +28,7 @@ export default {
   },
   data() {
     return {
-      currentElement: 1, // Set the currently viewed element's identifier here
+      currentElement: 1, // Set the initially viewed element's identifier here
       items: [
         {
           title: "Class 1",
@@ -51,9 +51,30 @@ export default {
       ],
     };
   },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll);
+  },
+  unmounted() {
+    window.removeEventListener('scroll', this.handleScroll);
+  },
+  methods: {
+    handleScroll() {
+      const windowHeight = window.innerHeight;
+      const elements = document.getElementsByClassName('list-item');
+      
+      for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        const rect = element.getBoundingClientRect();
+        
+        if (rect.top >= 0 && rect.top <= windowHeight) {
+          this.currentElement = i + 1;
+          break;
+        }
+      }
+    }
+  },
 };
 </script>
-
 
 <style>
 
