@@ -19,8 +19,8 @@ export default {
     title: String,
     description: String,
     imageSrc: String,
-    imagePosition: String,
-    parallaxBackground: String, 
+    imagePosition: String, // 'left' or 'right'
+    parallaxBackground: String, // Parallax background image URL
   },
   computed: {
     parallaxStyle() {
@@ -34,10 +34,7 @@ export default {
 };
 </script>
 
-
 <style>
-
-
 .text {
   background: rgba(0, 0, 0, 0.9);
   width: 60%;
@@ -51,6 +48,7 @@ export default {
   width: 40%;
   display: flex;
   justify-content: flex-end;
+  border: none;
 }
 
 .image img {
@@ -59,7 +57,6 @@ export default {
   border-radius: 10px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
-
 
 h2 {
   font-size: 28px;
@@ -72,24 +69,23 @@ p {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
 }
 
-
 .list-item {
   position: relative;
-  z-index: 0; /* Newly added */
+  z-index: 0;
 }
 
 .content {
   position: relative;  
-  z-index: 2; /* Modified */
+  z-index: 2;
 }
 
 .parallax-overlay {
-  background: rgba(0, 0, 0, 0.5); /* Overlay with black and 50% transparency */
+  background: rgba(0, 0, 0, 0.5);
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1; /* Modified */
+  z-index: 1;
 }
 </style>

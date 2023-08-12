@@ -10,9 +10,10 @@
         :imageSrc="item.imageSrc"
         :imagePosition="(index % 2 === 0) ? 'left' : 'right'"
         :parallaxBackground="item.parallaxBackground"
+        @item-selected="setCurrentElement"
       />
     </div>
-    <Timeline :currentElement="currentElement" />
+    <Timeline :currentElement="currentElement" :titles="titles" />
   </div>
 </template>
 
@@ -49,10 +50,13 @@ export default {
           parallaxBackground: require('@/assets/job1.png'), 
         },  
       ],
+      titles: [],
     };
   },
   mounted() {
-    window.addEventListener('scroll', this.handleScroll);
+    this.setTitles();
+  this.handleScroll();
+  window.addEventListener('scroll', this.handleScroll);
   },
   unmounted() {
     window.removeEventListener('scroll', this.handleScroll);
@@ -71,7 +75,13 @@ export default {
           break;
         }
       }
-    }
+    },
+    setTitles() {
+      this.titles = this.items.map(item => item.title);
+    },
+    setCurrentElement(title) {
+      this.currentElement = this.items.findIndex(item => item.title === title) + 1;
+    },
   },
 };
 </script>
@@ -101,7 +111,7 @@ body::-webkit-scrollbar {
 
 .list-item {
   width: 100vw; 
-  height: 500px;
+  height: 700px;
   display: flex;
   align-items: center;
   margin: 20px 0;
@@ -123,10 +133,16 @@ body::-webkit-scrollbar {
   overflow: hidden;
 }
 
+
 .list-item {
+  width: 100vw; 
+  height: 500px;
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin: 20px 0;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out; /* Add this line */
 }
 
 .text {

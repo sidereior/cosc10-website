@@ -1,28 +1,27 @@
 <template>
   <div class="timeline">
     <div
-      v-for="element in elements"
-      :key="element.id"
-      :class="{ 'timeline-node': true, 'current-node': element.id === currentElement }"
+      v-for="(title, index) in titles"
+      :key="index"
+      :class="{ 'timeline-node': true, 'current-node': (index + 1) === currentElement }"
     >
-      {{ element.label }}
+      {{ title }}
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      elements: [
-        { id: 1, label: 'Element 1' },
-        { id: 2, label: 'Element 2' },
-        { id: 3, label: 'Element 3' },
-        // Add more elements as needed
-      ],
-    };
+  props: {
+    currentElement: {
+      type: Number,
+      required: true,
+    },
+    titles: {
+      type: Array,
+      required: true,
+    },
   },
-  props: ['currentElement'],
 };
 </script>
 
