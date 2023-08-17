@@ -13,9 +13,10 @@
         @item-selected="setCurrentElement"
       />
     </div>
-    <Timeline :currentElement="currentElement" :titles="titles" />
+    <Timeline :currentElement="currentElement" :titles="titles" @timeline-node-clicked="scrollToElement" />
   </div>
 </template>
+
 
 <script>
 import Timeline from './components/Timeline.vue';
@@ -55,8 +56,8 @@ export default {
   },
   mounted() {
     this.setTitles();
-  this.handleScroll();
-  window.addEventListener('scroll', this.handleScroll);
+    this.handleScroll();
+    window.addEventListener('scroll', this.handleScroll);
   },
   unmounted() {
     window.removeEventListener('scroll', this.handleScroll);
@@ -82,9 +83,23 @@ export default {
     setCurrentElement(title) {
       this.currentElement = this.items.findIndex(item => item.title === title) + 1;
     },
+    scrollToElement(index) {
+      const element = document.getElementById(`item-${index + 1}`);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const targetTop = rect.top + scrollTop;
+        window.scrollTo({
+          top: targetTop,
+          behavior: "smooth",
+        });
+      }
+    },
   },
 };
 </script>
+
+
 
 <style>
 

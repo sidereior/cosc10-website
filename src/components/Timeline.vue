@@ -4,6 +4,7 @@
       v-for="(title, index) in titles"
       :key="index"
       :class="{ 'timeline-node': true, 'current-node': (index + 1) === currentElement }"
+      @click="$emit('timeline-node-clicked', index)"
     >
       {{ title }}
     </div>
@@ -32,21 +33,25 @@ export default {
   right: 0;
   width: 200px;
   height: 100%;
-  background-color: #f1f1f1;
+  background-color: transparent;
   padding: 20px;
   overflow-y: auto;
 }
 
 .timeline-node {
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #ddd;
-  cursor: pointer;
-}
+       font-size: 18px; 
+       font-weight: bold; 
+       background-color: white;
+       background-repeat: no-repeat;
+       background-size: cover;
+       -webkit-background-clip: text;
+       background-clip: text;
+       color: transparent;
+       cursor: pointer;
+     }
 
 .current-node {
-  background-color: #32CD32;
-  color: #fff;
-}
+       background-color: #5A5A5A; /* Replace with your desired gray color */
+       color: #fff;
+     }
 </style>
