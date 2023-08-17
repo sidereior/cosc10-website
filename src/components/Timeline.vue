@@ -52,6 +52,6 @@ export default {
 
 .current-node {
        background-color: #5A5A5A; 
-       color: #fff;
+       color: #da8ff7;
      }
 </style>

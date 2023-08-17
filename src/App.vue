@@ -1,17 +1,19 @@
 <template>
-  <div id="app">
+ <div id="app">
     <div class="parallax-background"></div>
     <div class="list">
-      <ListItem
-        v-for="(item, index) in items"
-        :key="index"
-        :title="item.title"
-        :description="item.description"
-        :imageSrc="item.imageSrc"
-        :imagePosition="(index % 2 === 0) ? 'left' : 'right'"
-        :parallaxBackground="item.parallaxBackground"
-        @item-selected="setCurrentElement"
-      />
+    <ListItem
+  v-for="(item, index) in items"
+  :key="index"
+  :title="item.title"
+  :description="item.description"
+  :imageSrc="item.imageSrc"
+  :imageSize="item.imageSize" 
+  imagePosition="(index % 2 === 0) ? 'left' : 'right'"
+  :parallaxBackground="item.parallaxBackground"
+  @item-selected="setCurrentElement"
+/>
+  
     </div>
     <Timeline :currentElement="currentElement" :titles="titles" @timeline-node-clicked="scrollToElement" />
   </div>
@@ -33,17 +35,20 @@ export default {
     currentElement: 1, 
     items: [
       {
-        title: "Introduction",
-        description: "Description of yourself",
+        title: "Hi, I'm Alexander Nanda!",
+        description: "I'm a rising freshman for Dartmouth College, and this is my portfolio to showcase my work and experiences for placement into COSC 10.",
         imageSrc: require('@/assets/intro.png'),
-        parallaxBackground: require('@/assets/intro.png'), 
-        isIntro: true, 
+        parallaxBackground: require('@/assets/intro2.png'), 
+        isIntro: true,
+        imageSize: '10%',
+        textboxSize: '50%', 
       },
       {
-        title: "Class 1",
+        title: "Job Experince 1 - LakeShore Cryotronics",
         description: "Description of Class 1",
-        imageSrc: require('@/assets/class1.png'),
-        parallaxBackground: require('@/assets/class1.png'), 
+        imageSrc: require('@/assets/lakeshore.png'),
+        parallaxBackground: require('@/assets/lakeback.png'),
+        imageSize: '15%', 
       },
       {
         title: "Project 1",
@@ -67,42 +72,37 @@ export default {
     this.handleScroll();
     window.addEventListener('scroll', this.handleScroll);
   },
-  unmounted() {
-    window.removeEventListener('scroll', this.handleScroll);
-  },
-  methods: {
+    methods: {
     handleScroll() {
-      const windowHeight = window.innerHeight;
-      const elements = document.getElementsByClassName('list-item');
-      
-      for (let i = 0; i < elements.length; i++) {
-        const element = elements[i];
-        const rect = element.getBoundingClientRect();
-        
-        if (rect.top >= 0 && rect.top <= windowHeight) {
-          this.currentElement = i + 1;
-          break;
-        }
-      }
-    },
-    setTitles() {
+  const elements = document.getElementsByClassName('list-item');
+  let activeElementIndex = null;
+
+  for (let i = 0; i < elements.length; i++) {
+    const rect = elements[i].getBoundingClientRect();
+    
+    if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+      activeElementIndex = i;
+      break;
+    }
+  }
+
+  if (activeElementIndex !== null) {
+    this.currentElement = activeElementIndex + 1;
+  }
+},
+
+      setTitles() {
       this.titles = this.items.map(item => item.title);
     },
     setCurrentElement(title) {
       this.currentElement = this.items.findIndex(item => item.title === title) + 1;
     },
-    scrollToElement(index) {
-      const element = document.getElementById(`item-${index + 1}`);
-      if (element) {
-        const rect = element.getBoundingClientRect();
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const targetTop = rect.top + scrollTop;
-        window.scrollTo({
-          top: targetTop,
-          behavior: "smooth",
-        });
-      }
-    },
+  scrollToElement(index) {
+  const element = document.getElementById(`item-${index}`);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+},
   },
 };
 </script>
@@ -129,17 +129,6 @@ body::-webkit-scrollbar {
   display: none; 
 }
 
-
-.list-item {
-  width: 100vw; 
-  height: 700px;
-  display: flex;
-  align-items: center;
-  margin: 20px 0;
-  position: relative;
-  overflow: hidden;
-}
-
 #app {
   background: #000;
   color: #e0e0e0;
@@ -147,42 +136,48 @@ body::-webkit-scrollbar {
 }
 
 .list {
-  display: grid;
-  gap: 20px;
-  place-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   padding: 20px;
-  overflow: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
-
 .list-item {
-  width: 100vw; 
-  height: 500px;
+  /* somehow this changes the entire scrolling behavior, need to text on mobile */
+  width: 300vw;
+  height: 1000px;
   display: flex;
   align-items: center;
-  margin: 20px 0;
+  margin: 20px;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease-in-out; 
+  transition: transform 0.3s ease-in-out;
+  padding: 20px;
 }
 
 .text {
   background: rgba(128, 128, 128, 0.6);
-  width: 60%;
+  width: 30%;
   padding: 10px 20px;
   box-sizing: border-box;
-}
+  margin: 20px; }
 
 .image {
-  width: 50%;
-  border: 2px solid white;
+  width: 40%;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-}
+  margin: 20px; }
 
 .image img {
   width: 100%;
   height: auto;
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
 }
 
 </style>
