@@ -28,32 +28,40 @@ export default {
     Timeline,
     ListItem,
   },
-  data() {
-    return {
-      currentElement: 1, // Set the initially viewed element's identifier here
-      items: [
-        {
-          title: "Class 1",
-          description: "Description of Class 1",
-          imageSrc: require('@/assets/class1.png'),
-          parallaxBackground: require('@/assets/class1.png'), 
-        },
-        {
-          title: "Project 1",
-          description: "Description of Project 1",
-          imageSrc: require('@/assets/project1.png'), 
-          parallaxBackground: require('@/assets/project1.png'), 
-        },
-        {
-          title: "Job Experience 1",
-          description: "Description of Job Experience 1",
-          imageSrc: require('@/assets/job1.png'), 
-          parallaxBackground: require('@/assets/job1.png'), 
-        },  
-      ],
-      titles: [],
-    };
-  },
+ data() {
+  return {
+    currentElement: 1, 
+    items: [
+      {
+        title: "Introduction",
+        description: "Description of yourself",
+        imageSrc: require('@/assets/intro.png'),
+        parallaxBackground: require('@/assets/intro.png'), 
+        isIntro: true, 
+      },
+      {
+        title: "Class 1",
+        description: "Description of Class 1",
+        imageSrc: require('@/assets/class1.png'),
+        parallaxBackground: require('@/assets/class1.png'), 
+      },
+      {
+        title: "Project 1",
+        description: "Description of Project 1",
+        imageSrc: require('@/assets/project1.png'), 
+        parallaxBackground: require('@/assets/project1.png'), 
+      },
+      {
+        title: "Job Experience 1",
+        description: "Description of Job Experience 1",
+        imageSrc: require('@/assets/job1.png'), 
+        parallaxBackground: require('@/assets/job1.png'), 
+      },  
+    ],
+    titles: [],
+  };
+},
+ 
   mounted() {
     this.setTitles();
     this.handleScroll();
@@ -99,8 +107,6 @@ export default {
 };
 </script>
 
-
-
 <style>
 
 :root {
@@ -115,12 +121,12 @@ body {
   color: var(--text-color);
   font-family: var(--font-family);
   overflow-y: scroll;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer and Edge */
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
 }
 
 body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
+  display: none; 
 }
 
 
@@ -157,7 +163,7 @@ body::-webkit-scrollbar {
   margin: 20px 0;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease-in-out; /* Add this line */
+  transition: transform 0.3s ease-in-out; 
 }
 
 .text {

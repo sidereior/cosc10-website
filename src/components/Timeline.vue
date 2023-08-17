@@ -51,7 +51,7 @@ export default {
      }
 
 .current-node {
-       background-color: #5A5A5A; /* Replace with your desired gray color */
+       background-color: #5A5A5A; 
        color: #fff;
      }
 </style>

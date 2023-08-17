@@ -1,15 +1,22 @@
 <template>
-  <div class="list-item" :style="parallaxStyle">
-    <div class="parallax-overlay"></div>
-    <div class="content">
-      <div class="image" :class="imagePosition">
-        <img :src="imageSrc" alt="Item Image">
+  <div>
+    <template v-if="isIntro">
+      <IntroItem :title="title" :description="description" :imageSrc="imageSrc" />
+    </template>
+    <template v-else>
+      <div class="list-item" :style="parallaxStyle">
+        <div class="parallax-overlay"></div>
+        <div class="content">
+          <div class="image" :class="imagePosition">
+            <img :src="imageSrc" alt="Item Image">
+          </div>
+          <div class="text">
+            <h2>{{ title }}</h2>
+            <p>{{ description }}</p>
+          </div>
+        </div>
       </div>
-      <div class="text">
-        <h2>{{ title }}</h2>
-        <p>{{ description }}</p>
-      </div>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -19,8 +26,9 @@ export default {
     title: String,
     description: String,
     imageSrc: String,
-    imagePosition: String, // 'left' or 'right'
-    parallaxBackground: String, // Parallax background image URL
+    imagePosition: String, 
+    parallaxBackground: String,
+    isIntro: Boolean, 
   },
   computed: {
     parallaxStyle() {
@@ -87,5 +95,28 @@ p {
   width: 100%;
   height: 100%;
   z-index: 1;
+}
+
+.intro-item {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.circular-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.intro-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 </style>
