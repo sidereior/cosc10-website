@@ -1,24 +1,21 @@
 <template>
- <div id="app">
-    <div class="parallax-background"></div>
+  <div id="app">
     <div class="list">
-    <ListItem
-  v-for="(item, index) in items"
-  :key="index"
-  :title="item.title"
-  :description="item.description"
-  :imageSrc="item.imageSrc"
-  :imageSize="item.imageSize" 
-  imagePosition="(index % 2 === 0) ? 'left' : 'right'"
-  :parallaxBackground="item.parallaxBackground"
-  @item-selected="setCurrentElement"
-/>
-  
+      <ListItem
+        v-for="(item, index) in items"
+        :key="index"
+        :title="item.title"
+        :description="item.description"
+        :imageSrc="item.imageSrc"
+        :imageSize="item.imageSize"
+        imagePosition="(index % 2 === 0) ? 'left' : 'right'"
+        :parallaxBackground="item.parallaxBackground"
+        @item-selected="setCurrentElement"
+      />
     </div>
     <Timeline :currentElement="currentElement" :titles="titles" @timeline-node-clicked="scrollToElement" />
   </div>
 </template>
-
 
 <script>
 import Timeline from './components/Timeline.vue';
@@ -30,49 +27,54 @@ export default {
     Timeline,
     ListItem,
   },
- data() {
-  return {
-    currentElement: 1, 
-    items: [
-      {
-        title: "Hi, I'm Alexander Nanda!",
-        description: "I'm a rising freshman for Dartmouth College, and this is my portfolio to showcase my work and experiences for placement into COSC 10.",
-        imageSrc: require('@/assets/intro.png'),
-        parallaxBackground: require('@/assets/intro2.png'), 
-        isIntro: true,
-        imageSize: '10%',
-        textboxSize: '50%', 
-      },
-      {
-        title: "Job Experince 1 - LakeShore Cryotronics",
-        description: "Description of Class 1",
-        imageSrc: require('@/assets/lakeshore.png'),
-        parallaxBackground: require('@/assets/lakeback.png'),
-        imageSize: '15%', 
-      },
-      {
-        title: "Project 1",
-        description: "Description of Project 1",
-        imageSrc: require('@/assets/project1.png'), 
-        parallaxBackground: require('@/assets/project1.png'), 
-      },
-      {
-        title: "Job Experience 1",
-        description: "Description of Job Experience 1",
-        imageSrc: require('@/assets/job1.png'), 
-        parallaxBackground: require('@/assets/job1.png'), 
-      },  
-    ],
-    titles: [],
-  };
-},
- 
+  data() {
+    return {
+      currentElement: 1,
+      items: [
+        {
+          title: "Hi, I'm Alexander Nanda!",
+          description: "I'm a rising freshman for Dartmouth College, and this is my portfolio to showcase my work and experiences for placement into COSC 10.",
+          imageSrc: require('@/assets/intro.png'),
+          parallaxBackground: require('@/assets/intro2.png'), 
+          isIntro: true,
+          imageSize: '25%',
+          textboxSize: '100%', 
+        },
+        {
+          title: "Job Experince 1 - LakeShore Cryotronics",
+          description: "I've worked as a software engineer for two years at LakeShore Cryotronics, specifically on a part of the MeasureLink team. \n You're probably asking yourself, what even is Cryotronics? Well, it's as it sounds, \"cold technology\". Over the past two years the bulk of my development has been in (.NET) C#, XAML, WPF, Prism, NUnit, and some Java, JS, and HTML as well. Working as a developer full-time in the summers and then part-time during the school year has been not only instrumental in my programming skills, but also in growing marketable business skills. ", 
+          imageSrc: require('@/assets/lakeshore.png'),
+          parallaxBackground: require('@/assets/lakeback.png'),
+          imageSize: '15%', 
+        },
+        {
+          title: "Project 1",
+          description: "Description of Project 1",
+          imageSrc: require('@/assets/project1.png'), 
+          parallaxBackground: require('@/assets/project1.png'), 
+        },
+        {
+          title: "Job Experience 1",
+          description: "Description of Job Experience 1",
+          imageSrc: require('@/assets/job1.png'), 
+          parallaxBackground: require('@/assets/job1.png'), 
+        },  
+      ],
+      titles: [],
+    };
+  },
   mounted() {
     this.setTitles();
     this.handleScroll();
     window.addEventListener('scroll', this.handleScroll);
+    this.updateTextBoxWidth(); // Call the method when the component is mounted
+    window.addEventListener('resize', this.updateTextBoxWidth); // Update the text box width on window resize
   },
-    methods: {
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('resize', this.updateTextBoxWidth); // Remove the event listener on component destruction
+  },
+  methods: {
     handleScroll() {
   const elements = document.getElementsByClassName('list-item');
   let activeElementIndex = null;
@@ -91,18 +93,27 @@ export default {
   }
 },
 
-      setTitles() {
+    setTitles() {
       this.titles = this.items.map(item => item.title);
     },
     setCurrentElement(title) {
       this.currentElement = this.items.findIndex(item => item.title === title) + 1;
     },
-  scrollToElement(index) {
-  const element = document.getElementById(`item-${index}`);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
-},
+    scrollToElement(index) {
+      const element = document.getElementById(`item-${index}`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    },
+    updateTextBoxWidth() {
+      const containerWidth = document.querySelector('.container').clientWidth;
+      const textBoxWidth = containerWidth * 0.3;
+
+      const textBoxes = document.querySelectorAll('.text');
+      textBoxes.forEach(textBox => {
+        textBox.style.width = `${textBoxWidth}px`;
+      });
+    },
   },
 };
 </script>
@@ -113,71 +124,80 @@ export default {
   --primary-color: #2c3e50; 
   --secondary-color: #bdc3c7;
   --text-color: #2c3e50; 
-  --font-family: 'Helvetica', sans-serif;
+  --font-family: 'Helvetica', serif;
 }
 
 body {
-  background-color: var(--primary-color);
+  background-color: transparent;
+  border: none;
   color: var(--text-color);
   font-family: var(--font-family);
   overflow-y: scroll;
-  scrollbar-width: none; 
-  -ms-overflow-style: none; 
+  overflow-x: hidden;
+  margin: 0; 
+  padding: 0;
 }
 
-body::-webkit-scrollbar {
-  display: none; 
+.container {
+    overflow-y: scroll;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;  
+}
+.container::-webkit-scrollbar { 
+    width: 0;
+    height: 0;
 }
 
 #app {
-  background: #000;
-  color: #e0e0e0;
-  font-family: 'Your-Font-Family', sans-serif;
+  background: #000; 
+    color: #e0e0e0;
+  font-family: 'Roboto', sans-serif;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 20px;
-  overflow-x: auto;
+  padding: 0;
   white-space: nowrap;
+  overflow-x: hidden;
 }
 
+
 .list-item {
-  /* somehow this changes the entire scrolling behavior, need to text on mobile */
-  width: 300vw;
+  width: 100%;
   height: 1000px;
   display: flex;
   align-items: center;
-  margin: 20px;
   position: relative;
+  overflow-x: hidden;
   overflow: hidden;
-  transition: transform 0.3s ease-in-out;
-  padding: 20px;
+  transition: transform 2.0s ease-in-out;
+  padding: 0px;
+  margin: 0px;
 }
 
 .text {
   background: rgba(128, 128, 128, 0.6);
-  width: 30%;
-  padding: 10px 20px;
-  box-sizing: border-box;
-  margin: 20px; }
-
-.image {
-  width: 40%;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
-  margin: 20px; }
-
-.image img {
   width: 100%;
-  height: auto;
+  padding: 10px 20px;
+  border-radius: 14px;
+  box-sizing: border-box;
+  margin: 20px;
+  word-wrap: break-word;
 }
 
-.list {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
+.image {
+  box-shadow: none;
+  width: 40%;
+  margin: 20px;
+}
+
+ .parallax-background {
+    height: 100vh;
+    padding: 0;
+    margin: 0;
 }
 
 </style>
