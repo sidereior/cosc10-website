@@ -8,9 +8,8 @@
         :description="item.description"
         :imageSrc="item.imageSrc"
         :imageSize="item.imageSize"
-        imagePosition="(index % 2 === 0) ? 'left' : 'right'"
         :parallaxBackground="item.parallaxBackground"
-        @item-selected="setCurrentElement"
+        imagePosition="(index % 2 === 0) ? 'left' : 'right'"
       />
     </div>
     <Timeline :currentElement="currentElement" :titles="titles" @timeline-node-clicked="scrollToElement" />
@@ -36,7 +35,6 @@ export default {
           description: "I'm a rising freshman at Dartmouth College, and this is my portfolio to showcase my work and experiences for placement into COSC 10.",
           imageSrc: require('@/assets/intro.png'),
           parallaxBackground: require('@/assets/intro2.png'), 
-          isIntro: true,
           imageSize: '25%',
           textboxSize: '100%', 
         },
@@ -71,15 +69,15 @@ export default {
   window.addEventListener('resize', this.updateSizes)
   },
   beforeUnmount() {
-      window.removeEventListener('resize', this.updateSizes); // Remove event listener on component destruction
+      window.removeEventListener('resize', this.updateSizes); 
     window.removeEventListener('scroll', this.handleScroll);
   },
   methods: {
   updateSizes() {
     const containerWidth = document.querySelector('.list-item').clientWidth;
-    const baseFontSize = 16; // You can adjust this base font size as needed
-    const textScaleFactor = 0.03; // Adjust this factor for text resizing
-    const imageScaleFactor = 0.03; // Adjust this factor for image resizing
+    const baseFontSize = 16; 
+    const textScaleFactor = 0.03;
+    const imageScaleFactor = 0.03; 
 
     const newTextSize = Math.floor(baseFontSize + containerWidth * textScaleFactor);
     const newImageSize = Math.floor(containerWidth * imageScaleFactor);
@@ -92,7 +90,7 @@ export default {
     const images = document.querySelectorAll('.image');
     images.forEach(image => {
       image.style.width = `${newImageSize}px`;
-      image.style.height = `${newImageSize}px`; // Maintain aspect ratio
+      image.style.height = `${newImageSize}px`; 
     });
   },
 
@@ -193,7 +191,7 @@ body {
 .text {
   background: rgba(128, 128, 128, 0.6);
   width: 100%;
-  max-width: 100;
+  max-width: 100%; /* Add % after 100 to specify the unit */
   padding: 10px 20px;
   border-radius: 14px;
   box-sizing: border-box;
@@ -205,7 +203,7 @@ body {
   box-shadow: none;
   width: 40%;
   margin: 20px;
-  max-width: 100;
+  max-width: 100%; /* Add % after 100 to specify the unit */
 }
 
  .parallax-background {

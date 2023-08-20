@@ -1,23 +1,16 @@
 <template>
-  <div>
-    <template v-if="isIntro">
-      <IntroItem :title="title" :description="description" :imageSrc="imageSrc" />
-    </template>
-    <template v-else>
-      <div class="list-item" :style="parallaxStyle">
-        <div class="content">
-          <div class="horizontal-layout">
-            <div class="image" :class="imagePosition" :style="{ width: imageSize }">
-              <img :src="imageSrc" alt="Item Image" />
-            </div>
-            <div class="text" :style="{ width: textboxSize }">
-              <h2>{{ title }}</h2>
-              <p>{{ description }}</p>
-            </div>
-          </div>
+  <div class="list-item" :style="parallaxStyle">
+    <div class="content">
+      <div class="horizontal-layout">
+        <div class="image" :class="imagePosition" :style="{ width: imageSize }">
+          <img :src="imageSrc" alt="Item Image" />
+        </div>
+        <div class="text" :style="{ width: textboxSize }">
+          <h2>{{ title }}</h2>
+          <p>{{ description }}</p>
         </div>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -44,8 +37,7 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
 .image {
   width: 40%;
   display: flex;
@@ -59,22 +51,31 @@ export default {
 }
 
 h2 {
-  font-size: 38px;
+  font-size: 2.375rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 p {
-  font-size: 20px;
+  font-size: 1.25rem;
   margin-top: 10px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .list-item {
   position: relative;
-  width: 300vw;
-  height: 1000px;
+  width: 100%;
+  height: 100vh;
   z-index: 0;
   overflow-x: hidden;
+}
+
+.parallax-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
 }
 
 .content {
