@@ -33,7 +33,7 @@ export default {
       items: [
         {
           title: "Hi, I'm Alexander Nanda!",
-          description: "I'm a rising freshman for Dartmouth College, and this is my portfolio to showcase my work and experiences for placement into COSC 10.",
+          description: "I'm a rising freshman at Dartmouth College, and this is my portfolio to showcase my work and experiences for placement into COSC 10.",
           imageSrc: require('@/assets/intro.png'),
           parallaxBackground: require('@/assets/intro2.png'), 
           isIntro: true,
@@ -42,7 +42,7 @@ export default {
         },
         {
           title: "Job Experince 1 - LakeShore Cryotronics",
-          description: "I've worked as a software engineer for two years at LakeShore Cryotronics, specifically on a part of the MeasureLink team. \n You're probably asking yourself, what even is Cryotronics? Well, it's as it sounds, \"cold technology\". Over the past two years the bulk of my development has been in (.NET) C#, XAML, WPF, Prism, NUnit, and some Java, JS, and HTML as well. Working as a developer full-time in the summers and then part-time during the school year has been not only instrumental in my programming skills, but also in growing marketable business skills. ", 
+          description: "I've worked as a software engineer for two years at LakeShore Cryotronics, specifically on a part of the MeasureLink team. You're probably asking yourself, what even is Cryotronics? Well, it's as it sounds, \"cold technology\". Over the past two years the bulk of my development has been in (.NET) C#, XAML, WPF, Prism, NUnit, and some Java, JS, and HTML as well. Working as a developer full-time in the summers and then part-time during the school year has been not only instrumental in my programming skills, but also in growing marketable business skills. ", 
           imageSrc: require('@/assets/lakeshore.png'),
           parallaxBackground: require('@/assets/lakeback.png'),
           imageSize: '15%', 
@@ -67,31 +67,52 @@ export default {
     this.setTitles();
     this.handleScroll();
     window.addEventListener('scroll', this.handleScroll);
-    this.updateTextBoxWidth(); // Call the method when the component is mounted
-    window.addEventListener('resize', this.updateTextBoxWidth); // Update the text box width on window resize
+      this.updateSizes(); // Initial size update
+  window.addEventListener('resize', this.updateSizes)
   },
   beforeUnmount() {
+      window.removeEventListener('resize', this.updateSizes); // Remove event listener on component destruction
     window.removeEventListener('scroll', this.handleScroll);
-    window.removeEventListener('resize', this.updateTextBoxWidth); // Remove the event listener on component destruction
   },
   methods: {
+  updateSizes() {
+    const containerWidth = document.querySelector('.list-item').clientWidth;
+    const baseFontSize = 16; // You can adjust this base font size as needed
+    const textScaleFactor = 0.03; // Adjust this factor for text resizing
+    const imageScaleFactor = 0.03; // Adjust this factor for image resizing
+
+    const newTextSize = Math.floor(baseFontSize + containerWidth * textScaleFactor);
+    const newImageSize = Math.floor(containerWidth * imageScaleFactor);
+
+    const textBoxes = document.querySelectorAll('.text');
+    textBoxes.forEach(textBox => {
+      textBox.style.fontSize = `${newTextSize}px`;
+    });
+
+    const images = document.querySelectorAll('.image');
+    images.forEach(image => {
+      image.style.width = `${newImageSize}px`;
+      image.style.height = `${newImageSize}px`; // Maintain aspect ratio
+    });
+  },
+
     handleScroll() {
-  const elements = document.getElementsByClassName('list-item');
-  let activeElementIndex = null;
+      const elements = document.getElementsByClassName('list-item');
+      let activeElementIndex = null;
 
-  for (let i = 0; i < elements.length; i++) {
-    const rect = elements[i].getBoundingClientRect();
-    
-    if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-      activeElementIndex = i;
-      break;
-    }
-  }
+      for (let i = 0; i < elements.length; i++) {
+        const rect = elements[i].getBoundingClientRect();
+        
+        if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
+          activeElementIndex = i;
+          break;
+        }
+      }
 
-  if (activeElementIndex !== null) {
-    this.currentElement = activeElementIndex + 1;
-  }
-},
+      if (activeElementIndex !== null) {
+        this.currentElement = activeElementIndex + 1;
+      }
+    },
 
     setTitles() {
       this.titles = this.items.map(item => item.title);
@@ -104,15 +125,6 @@ export default {
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
-    },
-    updateTextBoxWidth() {
-      const containerWidth = document.querySelector('.container').clientWidth;
-      const textBoxWidth = containerWidth * 0.3;
-
-      const textBoxes = document.querySelectorAll('.text');
-      textBoxes.forEach(textBox => {
-        textBox.style.width = `${textBoxWidth}px`;
-      });
     },
   },
 };
@@ -181,6 +193,7 @@ body {
 .text {
   background: rgba(128, 128, 128, 0.6);
   width: 100%;
+  max-width: 100;
   padding: 10px 20px;
   border-radius: 14px;
   box-sizing: border-box;
@@ -192,6 +205,7 @@ body {
   box-shadow: none;
   width: 40%;
   margin: 20px;
+  max-width: 100;
 }
 
  .parallax-background {
