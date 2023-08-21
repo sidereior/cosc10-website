@@ -2,12 +2,12 @@
   <div class="list-item" :style="parallaxStyle">
     <div class="content">
       <div class="horizontal-layout">
-        <div class="image" :class="imagePosition" :style="{ width: imageSize }">
+        <div class="image" :class="imagePosition" :style="{ width: imageWidth }">
           <img :src="imageSrc" alt="Item Image" />
         </div>
-        <div class="text" :style="{ width: textboxSize }">
+        <div class="text" :style="{ width: textWidth }">
           <h2>{{ title }}</h2>
-          <p>{{ description }}</p>
+          <p class="description">{{ description }}</p>
         </div>
       </div>
     </div>
@@ -23,7 +23,6 @@ export default {
     imagePosition: String, 
     parallaxBackground: String,
     isIntro: Boolean,
-    imageSize: String, 
   },
   computed: {
     parallaxStyle() {
@@ -33,25 +32,24 @@ export default {
           : "transparent",
       };
     },
+   
   },
 };
 </script>
 
 <style scoped>
-.image {
-  width: 40%;
+
+.image img {
+  width: var(--image-box-width, 100%); 
+  height: auto;
   display: flex;
   align-items: center;
   margin-right: 20px;
-}
 
-.image img {
-  width: 100%;
-  height: auto;
 }
 
 h2 {
-  font-size: 2.375rem;
+  font-size: 2.5rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -66,6 +64,7 @@ p {
   width: 100%;
   height: 100vh;
   z-index: 0;
+   white-space: normal; 
   overflow-x: hidden;
 }
 
@@ -87,5 +86,10 @@ p {
   display: flex;
   align-items: center;
   justify-content: safe;
+}
+
+.description {
+  font-size: 1.25rem; 
+  line-height: 1.75;
 }
 </style>
